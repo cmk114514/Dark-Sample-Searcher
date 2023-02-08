@@ -3,24 +3,54 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Atcoder Sample Searcher</title>
+		<title>Dark Sample Searcher</title>
 		<style type="text/css">
-a:link, a:visited { color: blue; text-decoration: none; }
-a:hover, a:active { color: blue; text-decoration: underline; }
+a:link, a:visited{
+	color: blue;
+	text-decoration: none;
+}
+a:hover, a:active{
+	color: blue;
+	text-decoration: underline;
+}
+select, option, textarea, button{
+	font-family: Consolas;
+	background-color: #fafafa;
+	border: 1px solid #767676;
+	border-radius: 2px;
+}
+select, option, button{
+	text-align: center;
+}
+select, option, textarea{
+	font-size: 16px;
+}
+button{
+	font-size: 14px;
+	cursor: pointer;
+}
 		</style>
 	</head>
-	<body style="text-align:center;font-family:Consolas;">
-		<h1>Dark <select style="text-align:center;font-family:Consolas;font-size:xx-large;font-weight:bold;" id="OjName"><option value = lg>Luogu</option><option value = cf>Codeforces</option><option value = at>AtCoder</option></select> Sample Searcher</h1>
+	<body style="text-align:center;font-family:Consolas;background-color:#efefef">
+		<h1>
+			Dark
+			<select style="font-size:xx-large;font-weight:bold" id="OjName">
+				<option value = lg style="font-size:xx-large">Luogu</option>
+				<option value = cf style="font-size:xx-large">Codeforces</option>
+				<option value = at style="font-size:xx-large">AtCoder</option>
+			</select>
+			Sample Searcher
+		</h1>
 		<div style="margin-bottom:6px">
-			<textarea placeholder="Put the input sample here..." id="InputSample" style="width:calc(50% - 25px);height:200px;resize:none;font-size:16px;"></textarea>
-			<textarea placeholder="Put the output sample here..." id="OutputSample" style="width:calc(50% - 25px);height:200px;resize:none;font-size:16px;"></textarea>
+			<textarea placeholder="Put the input sample here..." id="InputSample" style="width:calc(50% - 25px);height:200px;resize:none"></textarea>
+			<textarea placeholder="Put the output sample here..." id="OutputSample" style="width:calc(50% - 25px);height:200px;resize:none"></textarea>
 		</div>
 		<button onclick="f(0)">Search input</button>
 		<button onclick="f(1)">Search input & output</button>
 		<button onclick="f(2)">Search output</button>
-		<ul id="r" style="text-align:left;"></ul>
+		<ul id="r" type="text-align:left;"></ul>
 		<p id="s"></p>
-		<p>Made By CMK & RBT | <a href="https://github.com/cmk666/atcodersamplesearcher">GitHub</a></p>
+		<p>Made By CMK & RBT | <a href="https://github.com/cmk114514/Dark-Sample-Searcher">GitHub</a></p>
 		<script type="text/javascript">
 			function f(type) {
 				var xhr = new XMLHttpRequest()

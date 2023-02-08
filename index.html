@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Atcoder Sample Searcher</title>
+		<style type="text/css">
+a:link, a:visited { color: blue; text-decoration: none; }
+a:hover, a:active { color: blue; text-decoration: underline; }
+		</style>
+	</head>
+	<body style="text-align:center;font-family:Consolas;">
+		<h1>Dark <select style="text-align:center;font-family:Consolas;font-size:xx-large;font-weight:bold;" id="OjName"><option value = lg>Luogu</option><option value = cf>Codeforces</option><option value = at>AtCoder</option></select> Sample Searcher</h1>
+		<div style="margin-bottom:6px">
+			<textarea placeholder="Put the input sample here..." id="InputSample" style="width:calc(50% - 25px);height:200px;resize:none;font-size:16px;"></textarea>
+			<textarea placeholder="Put the output sample here..." id="OutputSample" style="width:calc(50% - 25px);height:200px;resize:none;font-size:16px;"></textarea>
+		</div>
+		<button onclick="f(0)">Search input</button>
+		<button onclick="f(1)">Search input & output</button>
+		<button onclick="f(2)">Search output</button>
+		<ul id="r" style="text-align:left;"></ul>
+		<p id="s"></p>
+		<p>Made By CMK & RBT | <a href="https://github.com/cmk666/atcodersamplesearcher">GitHub</a></p>
+		<script type="text/javascript">
+			function f(type) {
+				var xhr = new XMLHttpRequest()
+				var probset = document.getElementById('OjName').value
+				var cin = document.getElementById('InputSample').value
+				var cout = document.getElementById('OutputSample').value
+				var url = encodeURI('/search?p=' + probset + '&i=' + cin + '&o=' + cout + '&t=' + type)
+				xhr.open('GET', url, false)
+				xhr.send(null)
+				var ret = JSON.parse(xhr.response)
+				var res = ''
+				if(probset == 'lg') for(var j in ret){
+					var i = ret[j]
+					res += '<li><a href="https://www.luogu.com.cn/problem/P'
+					res += i['PID'] + '" target="_blank">P' + i['PID'] + '</a>'
+					res += ' Sample#' + i['SID']
+					res += ' (similarity ' + i['SIM'] + '%)</li>'
+				}
+				if(probset == 'cf') for(var j in ret){
+					var i = ret[j]
+					res += '<li><a href="https://codeforces.com/problemset/problem/'
+					res += i['CID'] + '/' + i['PID'] + '" target="_blank">'
+					res += i['CID'] + i['PID'] + '</a> Sample#' + i['SID']
+					res += ' (similarity ' + i['SIM'] + '%)</li>'
+				}
+				if(probset == 'at') for(var j in ret){
+					var i = ret[j]
+					res += '<li><a href="https://atcoder.jp/contests/'
+					res += i['CID'] + '/tasks/' + i['CID'] + '_' + i['PID']
+					res += '" target="_blank">' + i['CID'] + i['PID'].toUpperCase()
+					res += '</a> Sample#' + i['SID']
+					res += ' (similarity ' + i['SIM'] + '%)</li>'
+				}
+				document.getElementById('r').innerHTML = res
+				res = 'Find ' + ret.length + ' result'
+				if ( ret.length != 1 ) res += 's'
+				document.getElementById('s').innerText = res
+			}
+		</script>
+	</body>
+</html>

@@ -13,6 +13,9 @@ a:hover, a:active{
 	color: blue;
 	text-decoration: underline;
 }
+html{
+	background-color: #efefef;
+}
 select, option, textarea, button{
 	font-family: Consolas;
 	background-color: #fafafa;
@@ -31,13 +34,13 @@ button{
 }
 		</style>
 	</head>
-	<body style="text-align:center;font-family:Consolas;background-color:#efefef">
+	<body style="text-align:center;font-family:Consolas">
 		<h1>
 			Dark
 			<select style="font-size:xx-large;font-weight:bold" id="OjName">
-				<option value = lg style="font-size:xx-large">Luogu</option>
-				<option value = cf style="font-size:xx-large">Codeforces</option>
-				<option value = at style="font-size:xx-large">AtCoder</option>
+				<option value=lg style="font-size:xx-large">Luogu</option>
+				<option value=cf style="font-size:xx-large">Codeforces</option>
+				<option value=at style="font-size:xx-large">AtCoder</option>
 			</select>
 			Sample Searcher
 		</h1>
@@ -48,11 +51,11 @@ button{
 		<button onclick="f(0)">Search input</button>
 		<button onclick="f(1)">Search input & output</button>
 		<button onclick="f(2)">Search output</button>
-		<ul id="r" type="text-align:left;"></ul>
+		<ul id="r" style="text-align:left;"></ul>
 		<p id="s"></p>
-		<p>Made By CMK & RBT | <a href="https://github.com/cmk114514/Dark-Sample-Searcher">GitHub</a></p>
+		<p>Made by <b style="color:black">C</b><b style="color:red">MK</b> | <a href="https://github.com/cmk114514/Dark-Sample-Searcher">GitHub</a></p>
 		<script type="text/javascript">
-			function f(type) {
+			function f(type){
 				var xhr = new XMLHttpRequest()
 				var probset = document.getElementById('OjName').value
 				var cin = document.getElementById('InputSample').value
@@ -64,29 +67,36 @@ button{
 				var res = ''
 				if(probset == 'lg') for(var j in ret){
 					var i = ret[j]
-					res += '<li><a href="https://www.luogu.com.cn/problem/P'
-					res += i['PID'] + '" target="_blank">P' + i['PID'] + '</a>'
+					res += '<li><a href="https://www.luogu.com.cn/problem/'
+					res += i['PID'] + '" target="_blank">' + i['PID'] + '</a>'
 					res += ' Sample#' + i['SID']
 					res += ' (similarity ' + i['SIM'] + '%)</li>'
 				}
 				if(probset == 'cf') for(var j in ret){
 					var i = ret[j]
-					res += '<li><a href="https://codeforces.com/problemset/problem/'
-					res += i['CID'] + '/' + i['PID'] + '" target="_blank">'
-					res += i['CID'] + i['PID'] + '</a> Sample#' + i['SID']
-					res += ' (similarity ' + i['SIM'] + '%)</li>'
+					if(i['CID'] >= 100000){
+						res += '<li><a href="https://codeforces.com/gym/'
+						res += i['CID'] + '/problem/' + i['PID'] + '" target="_blank">'
+						res += i['CID'] + i['PID'] + '</a> Sample#' + i['SID']
+						res += ' (similarity ' + i['SIM'] + '%)</li>'
+					}else{
+						res += '<li><a href="https://codeforces.com/problemset/problem/'
+						res += i['CID'] + '/' + i['PID'] + '" target="_blank">'
+						res += i['CID'] + i['PID'] + '</a> Sample#' + i['SID']
+						res += ' (similarity ' + i['SIM'] + '%)</li>'
+					}
 				}
 				if(probset == 'at') for(var j in ret){
 					var i = ret[j]
 					res += '<li><a href="https://atcoder.jp/contests/'
 					res += i['CID'] + '/tasks/' + i['CID'] + '_' + i['PID']
-					res += '" target="_blank">' + i['CID'] + i['PID'].toUpperCase()
+					res += '" target="_blank">' + i['CID'].toUpperCase() + i['PID'].toUpperCase()
 					res += '</a> Sample#' + i['SID']
 					res += ' (similarity ' + i['SIM'] + '%)</li>'
 				}
 				document.getElementById('r').innerHTML = res
 				res = 'Find ' + ret.length + ' result'
-				if ( ret.length != 1 ) res += 's'
+				if ( ret.length > 1 ) res += 's'
 				document.getElementById('s').innerText = res
 			}
 		</script>

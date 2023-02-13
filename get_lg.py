@@ -1,33 +1,30 @@
-from bs4 import BeautifulSoup as bs
-import requests as req
-from os.path import join as pjoin
-def get(idx):
-	print(f'Getting {idx}...')
-	try:
-		url = f'https://www.luogu.com.cn/problem/P{idx}'
-		res = req.get(url, headers = {
-			'User-Agent': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; .NET4.0C; .NET4.0E; Tablet PC 2.0; wbx 1.0.0; wbxapp 1.0.0; Zoom 3.6.0)'
-		})
-		s = bs(res.text, 'lxml')
-		sa = s.select('#app > div.lg-container > article > pre > code')
-		assert len(sa) % 2 == 0
-		ret = []
-		for i in range(0, len(sa), 2):
-			ret.append((sa[i].get_text(), sa[i + 1].get_text()))
-		return ret
-	except Exception as e:
-		print(f'Error {e}')
-		return []
-def save(idx, sam):
-	print(f'Saving {idx}...')
-	try:
-		for i in range(len(sam)):
-			with open(pjoin('lg', f'P{idx}_{i + 1}.in'), 'w') as f:
-				f.write(sam[i][0].strip())
-			with open(pjoin('lg', f'P{idx}_{i + 1}.out'), 'w') as f:
-				f.write(sam[i][1].strip())
-	except Exception as e:
-		print(f'Error {e}')
-l, r = map(int, input('From ?~?: ').split())
-for i in range(l, r + 1):
-	save(i, get(i))
+from requests import get
+from time import sleep
+
+def fetch(name):
+	return get(f'https://www.luogu.com.cn/problem/{name}?_contentOnly', headers = {
+		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36 Edg/109.0.1518.78'
+	})
+
+def get_samples(name):
+	resp = fetch(name)
+	while resp.status_code != 200:
+		print(f'warn: fetched status code {resp.status_code}, retrying.')
+		sleep(0.1)
+		resp = fetch(name)
+	if resp.json()['code'] != 200:
+		print(f'warn: {name} is forbidden, {resp.json()["currentData"]["errorMessage"]}')
+		return
+	samples = resp.json()['currentData']['problem']['samples']
+	sample_id = 0
+	for [sample_input, sample_output] in samples:
+		sample_id += 1
+		open(f'lg/{name}_{sample_id}.in', 'w', encoding='utf-8').write(sample_input)
+		open(f'lg/{name}_{sample_id}.out', 'w', encoding='utf-8').write(sample_output)
+	print(f'info: fetched {name} with {sample_id} samples.')
+print('From ??? to ???')
+x, y = map(int, input().split())
+names = [f'P{_}' for _ in range(x, y + 1)]
+for name in names:
+	get_samples(name)
+	sleep(0.05)

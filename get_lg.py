@@ -19,8 +19,8 @@ def get_samples(name):
 	sample_id = 0
 	for [sample_input, sample_output] in samples:
 		sample_id += 1
-		open(f'lg/{name}_{sample_id}.in', 'w', encoding='utf-8').write(sample_input)
-		open(f'lg/{name}_{sample_id}.out', 'w', encoding='utf-8').write(sample_output)
+		open(f'data/lg/{name}_{sample_id}.in', 'w', encoding='utf-8').write(sample_input)
+		open(f'data/lg/{name}_{sample_id}.out', 'w', encoding='utf-8').write(sample_output)
 	print(f'info: fetched {name} with {sample_id} samples.')
 print('From ??? to ???')
 x, y = map(int, input().split())

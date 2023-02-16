@@ -34,9 +34,9 @@ def save(cid, pid, sam):
     print(f'Saving {cid}{pid}...')
     try:
         for i in range(len(sam)):
-            with open(pjoin('at', f'{cid}_{pid}_{i + 1}.in'), 'w') as f:
+            with open(pjoin(pjoin('data', 'at'), f'{cid}_{pid}_{i + 1}.in'), 'w') as f:
                 f.write(sam[i][0].replace('\r', '').strip())
-            with open(pjoin('at', f'{cid}_{pid}_{i + 1}.out'), 'w') as f:
+            with open(pjoin(pjoin('data', 'at'), f'{cid}_{pid}_{i + 1}.out'), 'w') as f:
                 f.write(sam[i][1].replace('\r', '').strip())
     except Exception as e:
         print(f'Error {e}')
